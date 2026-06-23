@@ -9,6 +9,7 @@ function QuestionItem(props) {
     const [showAnswer, setShowAnswer] = useState(false);
     const [explanation, setExplanation] = useState('');
     const [showExplanation, setShowExplanation] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [currentConfidence, setCurrentConfidence] = useState(question.confidence || 0);
     const [updatingConfidence, setUpdatingConfidence] = useState(false);
 
