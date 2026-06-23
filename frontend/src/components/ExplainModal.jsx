@@ -7,11 +7,8 @@ function ExplainModal(props) {
     const [explanation, setExplanation] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
-useEffect(() => {
-    if (isOpen) {
-        fetchExplanation();
-    }
-}, [isOpen, fetchExplanation]);
+
+    // MOVED UP - Define function FIRST
     const fetchExplanation = async () => {
         setLoading(true);
         setError('');
@@ -28,6 +25,13 @@ useEffect(() => {
             setLoading(false);
         }
     };
+
+    // NOW use it here
+    useEffect(() => {
+        if (isOpen) {
+            fetchExplanation();
+        }
+    }, [isOpen, fetchExplanation]);
 
     if (!isOpen) return null;
 

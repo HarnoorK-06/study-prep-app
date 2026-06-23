@@ -66,8 +66,8 @@ function App() {
           </>
         ) : (
           <>
-            <Route path="/dashboard" element={<DashboardPage onLogout={handleLogout} />} />
-            <Route path="/folder/:folderId" element={<FolderPage onLogout={handleLogout} />} />
+           <Route path="/dashboard" element={<DashboardPage userToken={userToken} onLogout={handleLogout} />} />
+          <Route path="/folder/:folderId" element={<FolderPage userToken={userToken} onLogout={handleLogout} />} />
             <Route path="*" element={<Navigate to="/dashboard" />} />
           </>
         )}
