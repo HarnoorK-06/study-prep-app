@@ -9,7 +9,7 @@ function SummarizeModal({ folderName, questions, onClose }) {
 
   useEffect(() => {
     fetchSummary();
-  }, []);
+  }, [fetchSummary])
 
   const fetchSummary = async () => {
     setLoading(true);

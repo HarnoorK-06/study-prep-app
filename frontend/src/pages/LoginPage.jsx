@@ -7,7 +7,6 @@ import * as api from '../services/api';
 
 // 2. create loginpage component
 function LoginPage(props) {
-    const navigate = useNavigate();
     
     // 3. create state variables
     const [email , setEmail] = useState('');

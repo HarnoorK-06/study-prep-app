@@ -7,7 +7,6 @@ import * as api from '../services/api';
 
 // 2. Create component
 function SignupPage(props) {
-    const navigate = useNavigate();
     
     // 3. state: email, password, Name, error, loading
     const [email , setEmail] = useState('');
