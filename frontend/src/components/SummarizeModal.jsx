@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './SummarizeModal.css';
 import * as api from '../services/api';
 
@@ -7,11 +7,8 @@ function SummarizeModal({ folderName, questions, onClose }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    fetchSummary();
-  }, [fetchSummary])
-
-  const fetchSummary = async () => {
+  // MOVED UP and wrapped in useCallback
+  const fetchSummary = useCallback(async () => {
     setLoading(true);
     setError('');
     try {
@@ -26,7 +23,12 @@ function SummarizeModal({ folderName, questions, onClose }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [folderName, questions]);
+
+  // NOW use it here
+  useEffect(() => {
+    fetchSummary();
+  }, [fetchSummary]);
 
   return (
     <div className="summarize-overlay" onClick={onClose}>

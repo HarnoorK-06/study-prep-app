@@ -1,7 +1,7 @@
 // 1. Imports
 import React from 'react';
 import {useState} from 'react';
-import {Link, useNavigate} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import './LoginPage.css';
 import * as api from '../services/api';
 
