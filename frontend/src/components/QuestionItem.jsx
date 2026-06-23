@@ -9,7 +9,6 @@ function QuestionItem(props) {
     const [showAnswer, setShowAnswer] = useState(false);
     const [explanation, setExplanation] = useState('');
     const [showExplanation, setShowExplanation] = useState(false);
-    const [loading, setLoading] = useState(false);
     const [currentConfidence, setCurrentConfidence] = useState(question.confidence || 0);
     const [updatingConfidence, setUpdatingConfidence] = useState(false);
 
@@ -51,13 +50,6 @@ function QuestionItem(props) {
         }
     };
 
-    const getConfidenceLabel = () => {
-        switch(currentConfidence) {
-            case 0: return '🔴 Not Confident';
-            case 1: return '🟡 Somewhat';
-            case 2: return '🟢 Very Confident';
-            default: return '⚪ Not Set';
-        }
     };
 
     return (
