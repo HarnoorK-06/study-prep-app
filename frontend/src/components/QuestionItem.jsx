@@ -50,7 +50,6 @@ function QuestionItem(props) {
         }
     };
 
-    };
 
     return (
         <div className="question-item">
