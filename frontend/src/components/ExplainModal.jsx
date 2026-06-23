@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './ExplainModal.css';
 import * as api from '../services/api';
 
@@ -9,7 +9,7 @@ function ExplainModal(props) {
     const [error, setError] = useState('');
 
     // MOVED UP - Define function FIRST
-    const fetchExplanation = async () => {
+    const fetchExplanation = useCallback(async () => {
         setLoading(true);
         setError('');
         try {
@@ -24,7 +24,7 @@ function ExplainModal(props) {
         } finally {
             setLoading(false);
         }
-    };
+    }, [question, answer]);
 
     // NOW use it here
     useEffect(() => {

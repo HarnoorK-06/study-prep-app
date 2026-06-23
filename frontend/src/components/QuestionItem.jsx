@@ -102,9 +102,8 @@ function QuestionItem(props) {
                     <button 
                     onClick={handleExplain} 
                     disabled={true}
-                    title="AI features temporarily unavailable"
-                >
-                💡 AI Explanation (Temporarily Unavailable)
+                    >
+                     {loading ? '⏳ Loading...' : '💡 AI Explanation (Temporarily Unavailable)'}
                 </button>
                 </div>
             )}
