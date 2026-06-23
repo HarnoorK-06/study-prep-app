@@ -1,0 +1,89 @@
+/*  1. style the main login page container */
+.login-page {
+    background-color: #f7eedf;
+    min-height : 100vh;
+    display : flex; /*center everything*/
+    justify-content : center;
+    align-items: center;
+}
+
+/*  2. style the login box */
+.login-box {
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+/*  3. style the heading */
+.login-box h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+/*  4. style the form */
+.login-box form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/*  5. style inputs */
+.login-box input {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    outline: none;
+}
+
+.login-box input:focus {
+    border-color: #888;
+}
+
+/*  6. style button */
+.login-box button {
+    padding: 12px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius : 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.login-box button:hover {
+    background-color: #555;
+}
+
+.login-box button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/*  7. style error message */
+.login-box .error {
+    color: red;
+    font-size: 14px;
+    margin: 0;
+}
+
+/*  8. style the signup link paragraph */
+.login-box p {
+    text-align: center;
+    margin-top: 20px;
+    color: #666;
+}
+
+.login-box a {
+    color : #333;
+    text-decoration: none;
+}
+
+.login-box a:hover {
+    text-decoration: underline;
+}
