@@ -15,6 +15,7 @@ import './App.css';
 function App() {
   // 6. Create state for authentication
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userToken, setUserToken] = useState(null);
   const [loading, setLoading] = useState(true);
 
   // 7. Check on page load if user already has a token
