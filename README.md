@@ -45,7 +45,7 @@ Dashboard
 ---
 
 
-Full Stack JavaScript | RESTful API 
+
 
 
 
