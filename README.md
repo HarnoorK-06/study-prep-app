@@ -12,24 +12,22 @@ https://study-prep-app-v5o5-27pzapgj6-noor22.vercel.app
 
 ---
 
-✨ Key Features
-
-User Authentication – Secure login/signup with JWT
-Folder Organization – Group questions by topic
-Confidence Tracking – Mark confidence levels (🔴 Not Confident, 🟡 Somewhat, 🟢 Very Confident)
-AI Explanations – Get instant AI-powered explanations for answers
-AI Summaries – Auto-generate folder summaries
+## ✨ Key Features
+- User Authentication – Secure login/signup with JWT
+- Folder Organization – Group questions by topic
+- Confidence Tracking – Mark confidence levels (🔴 Not Confident, 🟡 Somewhat, 🟢 Very Confident)
+- AI Explanations – Get instant AI-powered explanations for answers
+- AI Summaries – Auto-generate folder summaries
 
 ---
 
 
-🛠 Tech Stack
+## 🛠 Tech Stack
+**Frontend:** React.js, React Router, CSS3, Vercel
 
-Frontend: React.js, React Router, CSS3, Vercel
+**Backend:** Node.js, Express.js, MongoDB, JWT
 
-Backend: Node.js, Express.js, MongoDB, JWT
-
-AI: Google Generative AI (Gemini)
+**AI:** Google Generative AI (Gemini)
 
 
 ---
@@ -47,7 +45,7 @@ Dashboard
 ---
 
 
-Full Stack JavaScript | RESTful API | Production Ready
+Full Stack JavaScript | RESTful API 
 
 
 
