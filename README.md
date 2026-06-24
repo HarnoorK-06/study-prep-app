@@ -1,0 +1,23 @@
+Study Prep App
+A full-stack AI-powered web application for students to organize questions, track confidence levels, and get AI-generated explanations instantly.
+🚀 Live Demo
+https://study-prep-app-v5o5-27pzapgj6-noor22.vercel.app
+✨ Key Features
+User Authentication – Secure login/signup with JWT
+Folder Organization – Group questions by topic
+Confidence Tracking – Mark confidence levels (🔴 Not Confident, 🟡 Somewhat, 🟢 Very Confident)
+AI Explanations – Get instant AI-powered explanations for answers
+AI Summaries – Auto-generate folder summaries
+🛠 Tech Stack
+Frontend: React.js, React Router, CSS3, Vercel
+ Backend: Node.js, Express.js, MongoDB, JWT
+ AI: Google Generative AI (Gemini)
+📸 Screenshots
+Login Page
+
+Dashboard
+
+
+
+
+Full Stack JavaScript | RESTful API
