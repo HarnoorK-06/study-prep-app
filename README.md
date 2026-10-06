@@ -7,7 +7,7 @@ A full-stack AI-powered web application for students to organize questions, trac
 
 🚀 Live Demo
 
-https://study-prep-app-v5o5-27pzapgj6-noor22.vercel.app
+https://study-prep-4uoapqr3x-noor22.vercel.app/login
 
 
 ---
