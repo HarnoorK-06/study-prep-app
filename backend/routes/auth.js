@@ -9,7 +9,8 @@ const router = express.Router();
 router.post('/signup', async(req, res) => {
     try {
         // step 1: get name , email, password from req.body
-        const {name, email, password} = req.body;
+        const {name, password} = req.body;
+        const email = req.body.email?.trim().toLowerCase();
         
         // step 2: check all the fields exist
         if (!name || !email || !password) {
@@ -70,6 +71,12 @@ router.post('/signup', async(req, res) => {
 
     } catch (error) {
         console.log(error);
+        if (error.name===11000) {
+            return res.status(400).json({
+                success: false,
+                message: 'Email is already in use.'
+            });
+        }
         res.status(500).json({
             success: false,
             message: 'Error creating user',
@@ -83,7 +90,8 @@ router.post('/signup', async(req, res) => {
 router.post('/login', async(req, res) => {
     try{
         // step 1: get email , password from req.body
-        const {email, password} = req.body;
+        const {password} = req.body;
+        const email = req.body.email?.trim().toLowerCase();
         
         // step 2: check all fields exist
         if (!email || !password) {

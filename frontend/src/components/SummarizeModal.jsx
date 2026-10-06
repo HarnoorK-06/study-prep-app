@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import ReactMarkdown from 'react-markdown';
 import './SummarizeModal.css';
 import * as api from '../services/api';
 
@@ -7,25 +8,25 @@ function SummarizeModal({ folderName, questions, onClose }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // MOVED UP and wrapped in useCallback
   const fetchSummary = useCallback(async () => {
     setLoading(true);
     setError('');
     try {
-      const response = await api.summarizeFolder(folderName, questions);
+      // Only send what the AI needs (not ids, dates, confidence, etc.)
+      const qaPairs = questions.map((q) => ({ question: q.question, answer: q.answer }));
+      const response = await api.summarizeFolder(folderName, qaPairs);
       if (response.success) {
         setSummary(response.data.summary);
       } else {
-        setError(response.message);
+        setError(response.message || 'Failed to generate summary');
       }
     } catch (err) {
-      setError('Failed to generate summary');
+      setError('Failed to generate summary. Please try again.');
     } finally {
       setLoading(false);
     }
   }, [folderName, questions]);
 
-  // NOW use it here
   useEffect(() => {
     fetchSummary();
   }, [fetchSummary]);
@@ -40,11 +41,17 @@ function SummarizeModal({ folderName, questions, onClose }) {
 
         <div className="summarize-body">
           {loading && <p className="loading">Generating summary...</p>}
-          {error && <p className="error">{error}</p>}
+          {error && (
+            <div className="error">
+              <p>{error}</p>
+              <button onClick={fetchSummary}>Try again</button>
+            </div>
+          )}
           {summary && (
             <div className="summary-box">
               <h4>Summary:</h4>
-              <p>{summary}</p>
+              {/* Shows the AI's Markdown formatting safely (no HTML is run) */}
+              <ReactMarkdown>{summary}</ReactMarkdown>
             </div>
           )}
         </div>

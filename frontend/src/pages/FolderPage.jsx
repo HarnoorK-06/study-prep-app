@@ -205,13 +205,13 @@ function FolderPage({ onLogout }) {
               {showForm ? 'Cancel' : '+ Add Q&A'}
             </button>
             <button
-              className="btn-secondary"
-              onClick={handleOpenSummarize}
-              disabled={true}
-              title="AI features temporarily unavailable"
-            >
-              📊 Folder Summary (Temporarily Unavailable)
-            </button>
+            className="btn-secondary"
+            onClick={handleOpenSummarize}
+            disabled={allQuestions.length === 0}
+            title={allQuestions.length === 0 ? 'Add a question first' : 'Summarize this folder with AI'}
+          >
+            📊 Folder Summary
+          </button>
           </div>
         </div>
 

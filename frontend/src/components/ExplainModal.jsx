@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import ReactMarkdown from 'react-markdown';
 import './ExplainModal.css';
 import * as api from '../services/api';
 
-function ExplainModal(props) {
-    const { question, answer, isOpen, onClose } = props;
+// FolderPage only renders this modal when it should be open,
+// so it fetches the explanation as soon as it appears.
+function ExplainModal({ question, answer, onClose }) {
     const [explanation, setExplanation] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
-    // MOVED UP - Define function FIRST
     const fetchExplanation = useCallback(async () => {
         setLoading(true);
         setError('');
@@ -17,23 +18,18 @@ function ExplainModal(props) {
             if (response.success) {
                 setExplanation(response.data.explanation);
             } else {
-                setError(response.message);
+                setError(response.message || 'Failed to get explanation');
             }
         } catch (err) {
-            setError('Failed to get explanation');
+            setError('Failed to get explanation. Please try again.');
         } finally {
             setLoading(false);
         }
     }, [question, answer]);
 
-    // NOW use it here
     useEffect(() => {
-        if (isOpen) {
-            fetchExplanation();
-        }
-    }, [isOpen, fetchExplanation]);
-
-    if (!isOpen) return null;
+        fetchExplanation();
+    }, [fetchExplanation]);
 
     return (
         <div className="explain-overlay" onClick={onClose}>
@@ -55,11 +51,18 @@ function ExplainModal(props) {
                     </div>
 
                     {loading && <p className="loading">Generating explanation...</p>}
-                    {error && <p className="error">{error}</p>}
+                    {error && (
+                        <div className="error">
+                            <p>{error}</p>
+                            <button onClick={fetchExplanation}>Try again</button>
+                        </div>
+                    )}
                     {explanation && (
                         <div className="explanation-box">
                             <h4>Explanation:</h4>
-                            <p>{explanation}</p>
+                            {/* ReactMarkdown shows **bold**, headings and lists properly,
+                                and never runs HTML from the AI text (safe from script injection) */}
+                            <ReactMarkdown>{explanation}</ReactMarkdown>
                         </div>
                     )}
                 </div>

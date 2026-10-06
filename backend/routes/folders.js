@@ -3,6 +3,7 @@ const router = express.Router();
 const Folder = require("../models/Folder");
 const QA = require('../models/QA');
 const auth = require('../middleware/auth');
+const escapeRegex = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 
 // 1. Get all folders
@@ -37,7 +38,7 @@ router.get('/search', auth, async (req, res) => {
     
     const folders = await Folder.find({
       userId: req.user.userId,
-      name: {$regex: name, $options: 'i'}
+      name: {$regex: escapeRegex(name), $options: 'i'}
     });
     
     res.status(200).json({
@@ -126,11 +127,16 @@ router.patch('/:id', auth, async (req, res) => {
     const {id} = req.params;
     const {name, icon, colour} = req.body;
 
-    const updateFolder = await Folder.findByIdAndUpdate(
-      {_id: id, userId: req.user.userId}, 
-      {name, icon, colour},
-      {new: true, runValidators: true}
-    );
+    const updates = {};
+if (name !== undefined) updates.name = name;
+if (icon !== undefined) updates.icon = icon;
+if (colour !== undefined) updates.colour = colour;
+
+const updateFolder = await Folder.findOneAndUpdate(
+  {_id: id, userId: req.user.userId},
+  updates,
+  {new: true, runValidators: true}
+);
 
     if (!updateFolder) {
       return res.status(404).json({

@@ -2,35 +2,13 @@ import React, { useState } from 'react';
 import './QuestionItem.css';
 import * as api from '../services/api';
 
-function QuestionItem(props) {
-    const question = props.question;
-    const onUpdate = props.onUpdate;
-    const onDelete = props.onDelete;
+function QuestionItem({ question, onExplain, onUpdate, onDelete }) {
     const [showAnswer, setShowAnswer] = useState(false);
-    const [explanation, setExplanation] = useState('');
-    const [showExplanation, setShowExplanation] = useState(false);
-    const [loading, setLoading] = useState(false);
     const [currentConfidence, setCurrentConfidence] = useState(question.confidence || 0);
     const [updatingConfidence, setUpdatingConfidence] = useState(false);
 
     const handleToggleAnswer = () => {
         setShowAnswer(!showAnswer);
-    };
-
-    const handleExplain = async () => {
-        setLoading(true);
-        const response = await api.explainAnswer(question.question, question.answer);
-        if (response.success) {
-            setExplanation(response.data.explanation);
-            setShowExplanation(true);
-        }
-        setLoading(false);
-    };
-
-    const handleDeleteQuestion = async () => {
-        if (window.confirm('Delete this question?')) {
-            onDelete();
-        }
     };
 
     // Handle confidence level update
@@ -51,13 +29,13 @@ function QuestionItem(props) {
         }
     };
 
-
     return (
         <div className="question-item">
             <div className="question-header">
                 <p className="question-text"><strong>Q:</strong> {question.question}</p>
                 <div className="question-icons">
-                    <button onClick={handleDeleteQuestion} title="Delete">🗑️</button>
+                    {/* FolderPage already asks "Are you sure?", so no second confirm here */}
+                    <button onClick={onDelete} title="Delete">🗑️</button>
                 </div>
             </div>
 
@@ -99,19 +77,8 @@ function QuestionItem(props) {
             {showAnswer && (
                 <div className="answer-box">
                     <p><strong>A:</strong> {question.answer}</p>
-                    <button 
-                    onClick={handleExplain} 
-                    disabled={true}
-                    >
-                     {loading ? '⏳ Loading...' : '💡 AI Explanation (Temporarily Unavailable)'}
-                </button>
-                </div>
-            )}
-
-            {showExplanation && (
-                <div className="explanation-box">
-                    <h4>Explanation:</h4>
-                    <p>{explanation}</p>
+                    {/* Tells FolderPage to open the ExplainModal for this question */}
+                    <button onClick={onExplain}>💡 AI Explanation</button>
                 </div>
             )}
         </div>

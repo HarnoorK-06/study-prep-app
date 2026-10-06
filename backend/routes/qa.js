@@ -3,6 +3,7 @@ const router = express.Router();
 const QA = require("../models/QA");
 const auth = require('../middleware/auth');
 const Folder = require("../models/Folder");
+const escapeRegex = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 // 1. Search within a folder (MUST come BEFORE /:folderId route)
 router.get('/:folderId/search', auth, async (req, res) => {
@@ -16,13 +17,15 @@ router.get('/:folderId/search', auth, async (req, res) => {
       });
     }
     
-    const results = await QA.find({
-      folderId: req.params.folderId,
-      $or: [
-        {question: {$regex: term, $options: 'i'}},
-        {answer: {$regex: term, $options: 'i'}},
-      ]
-    });
+  const safeTerm = escapeRegex(term);
+  const results = await QA.find({
+    folderId: req.params.folderId,
+    userId: req.user.userId,
+    $or: [
+      {question: {$regex: safeTerm, $options: 'i'}},
+      {answer: {$regex: safeTerm, $options: 'i'}},
+    ]
+  });
     
     res.status(200).json({
       success: true,
@@ -42,7 +45,7 @@ router.get('/:folderId/search', auth, async (req, res) => {
 router.get('/:folderId', auth, async (req, res) => {
   try {
     const folderId = req.params.folderId;
-    const qas = await QA.find({folderId}).sort({confidence: 1});
+    const qas = await QA.find({folderId, userId: req.user.userId}).sort({confidence: 1});
     res.status(200).json({
       success: true,
       data: qas
@@ -68,6 +71,14 @@ router.post('/:folderId', auth, async (req, res) => {
       return res.status(400).json({
         success: false,
         message: 'Question and answer are required'
+      });
+    }
+
+  const folder = await Folder.findOne({_id: folderId, userId});
+    if (!folder) {
+      return res.status(404).json({
+        success: false,
+        message: 'Folder not found'
       });
     }
     
@@ -138,11 +149,15 @@ router.patch('/:id', auth, async (req, res) => {
     const {id} = req.params;
     const {question, answer} = req.body;
     
-    const updateQA = await QA.findByIdAndUpdate(
-      {_id: id, userId: req.user.userId},
-      {question, answer},
-      {new: true, runValidators: true}
-    );
+    const updates = {};
+        if (question !== undefined) updates.question = question;
+        if (answer !== undefined) updates.answer = answer;
+
+        const updateQA = await QA.findOneAndUpdate(
+          {_id: id, userId: req.user.userId},
+          updates,
+          {new: true, runValidators: true}
+        );
     
     if (!updateQA) {
       return res.status(404).json({
